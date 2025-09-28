@@ -76,23 +76,14 @@ A aplicação utiliza elementos visuais JavaFX para demonstrar:
 - **Indicadores visuais** como setas e índices
 - **Controles de velocidade** para ajustar a animação
 
-## 🏗️ Estrutura do Projeto
-
-```
-OrdenacaoJavaFX/
-├── src/
-│   ├── Principal.java          # Classe principal da aplicação
-│   ├── MergeSort.java         # Implementação do Merge Sort
-│   ├── QuickSortSemPivo.java  # Implementação do Quick Sort sem pivô
-│   └── AnimationController.java # Controlador das animações
-├── resources/
-│   └── styles.css             # Estilos da interface (se aplicável)
-└── README.md
-```
-
 ## 👥 Desenvolvimento
 
 Este projeto foi desenvolvido como **trabalho em dupla** seguindo as especificações da atividade prática.
+— Desenvolvedores:
+
+Daniel Andreassi
+
+Allan Maldonado
 
 **Requisitos atendidos:**
 - ✅ Animação visual dos algoritmos
