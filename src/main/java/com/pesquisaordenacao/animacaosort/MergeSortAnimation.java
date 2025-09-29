@@ -142,14 +142,12 @@ public class MergeSortAnimation extends Application {
 
                 int[] aux = new int[tl];
                 Platform.runLater(() -> {
-                    retirarDestaqueDeLinha(0);
                     destacarLinha(1);
                     criarVetorNaTela("aux", aux);
                 });
                 Thread.sleep(DELAY);
 
                 Platform.runLater(() -> {
-                    retirarDestaqueDeLinha(1);
                     destacarLinha(2);
                 });
                 Thread.sleep(DELAY);
@@ -157,7 +155,7 @@ public class MergeSortAnimation extends Application {
                 merge(0, tl - 1, aux);
 
                 Platform.runLater(() -> {
-                    retirarDestaqueDeLinha(2);
+                    limparTodosDestaques();
                     configurarBotoesFinal();
                     removerVetorDaTela("aux");
                     deletarVariavel("esquerda");
@@ -189,13 +187,11 @@ public class MergeSortAnimation extends Application {
         Thread.sleep(DELAY);
 
         Platform.runLater(() -> {
-            retirarDestaqueDeLinha(5);
             destacarLinha(6);
         });
         Thread.sleep(DELAY);
 
         if (esquerda < direita) {
-            Platform.runLater(() -> retirarDestaqueDeLinha(6));
             Thread.sleep(DELAY);
 
             int meio = (esquerda + direita) / 2;
@@ -207,30 +203,25 @@ public class MergeSortAnimation extends Application {
             Thread.sleep(DELAY);
 
             Platform.runLater(() -> {
-                retirarDestaqueDeLinha(7);
                 destacarLinha(8);
             });
             Thread.sleep(DELAY);
             merge(esquerda, meio, aux);
-            Platform.runLater(() -> retirarDestaqueDeLinha(8));
             Thread.sleep(DELAY);
 
 
             Platform.runLater(() -> destacarLinha(9));
             Thread.sleep(DELAY);
             merge(meio + 1, direita, aux);
-            Platform.runLater(() -> retirarDestaqueDeLinha(9));
             Thread.sleep(DELAY);
 
 
             Platform.runLater(() -> destacarLinha(10));
             Thread.sleep(DELAY);
             fusao(esquerda, meio, meio + 1, direita, aux);
-            Platform.runLater(() -> retirarDestaqueDeLinha(10));
             Thread.sleep(DELAY);
 
         } else {
-            Platform.runLater(() -> retirarDestaqueDeLinha(6));
             Thread.sleep(DELAY);
         }
     }
@@ -254,7 +245,6 @@ public class MergeSortAnimation extends Application {
         final int[] finalJ = {j};
         final int[] finalK = {k};
         Platform.runLater(() -> {
-            retirarDestaqueDeLinha(14);
             destacarLinha(15);
             criaAtualizaVariavel("i", finalI[0]);
             criaAtualizaVariavel("j", finalJ[0]);
@@ -266,7 +256,6 @@ public class MergeSortAnimation extends Application {
             final int currentI = finalI[0];
             final int currentJ = finalJ[0];
             Platform.runLater(() -> {
-                retirarDestaqueDeLinha(15);
                 destacarLinha(16);
                 animacaoAuxUsoDaPosicaoDoVetor("vet", currentI);
                 animacaoAuxUsoDaPosicaoDoVetor("vet", currentJ);
@@ -275,7 +264,6 @@ public class MergeSortAnimation extends Application {
 
             if (vet[finalI[0]] < vet[finalJ[0]]) {
                 Platform.runLater(() -> {
-                    retirarDestaqueDeLinha(16);
                     destacarLinha(17);
                 });
                 Thread.sleep(DELAY);
@@ -284,7 +272,6 @@ public class MergeSortAnimation extends Application {
                 final int auxK = finalK[0];
                 final int auxVal = aux[finalK[0]];
                 Platform.runLater(() -> {
-                    retirarDestaqueDeLinha(17);
                     destacarLinha(18);
                     atualizaVetorPorPos("aux", auxK, auxVal);
                     animacaoAuxUsoDaPosicaoDoVetor("aux", auxK);
@@ -295,12 +282,10 @@ public class MergeSortAnimation extends Application {
                 Platform.runLater(() -> {
                     criaAtualizaVariavel("i", finalI[0]);
                     criaAtualizaVariavel("k", finalK[0]);
-                    retirarDestaqueDeLinha(18);
                 });
                 Thread.sleep(DELAY);
             } else {
                 Platform.runLater(() -> {
-                    retirarDestaqueDeLinha(16);
                     destacarLinha(19);
                 });
                 Thread.sleep(DELAY);
@@ -309,7 +294,6 @@ public class MergeSortAnimation extends Application {
                 final int auxK = finalK[0];
                 final int auxVal = aux[finalK[0]];
                 Platform.runLater(() -> {
-                    retirarDestaqueDeLinha(19);
                     destacarLinha(20);
                     atualizaVetorPorPos("aux", auxK, auxVal);
                     animacaoAuxUsoDaPosicaoDoVetor("aux", auxK);
@@ -320,7 +304,6 @@ public class MergeSortAnimation extends Application {
                 Platform.runLater(() -> {
                     criaAtualizaVariavel("j", finalJ[0]);
                     criaAtualizaVariavel("k", finalK[0]);
-                    retirarDestaqueDeLinha(20);
                 });
                 Thread.sleep(DELAY);
             }
@@ -329,7 +312,6 @@ public class MergeSortAnimation extends Application {
         while (finalI[0] <= finalFim1) { // Corrected condition
             final int currentI = finalI[0];
             Platform.runLater(() -> {
-                retirarDestaqueDeLinha(16); // Remove highlight from previous loop condition
                 destacarLinha(22);
                 animacaoAuxUsoDaPosicaoDoVetor("vet", currentI);
             });
@@ -339,7 +321,6 @@ public class MergeSortAnimation extends Application {
             final int auxK = finalK[0];
             final int auxVal = aux[finalK[0]];
             Platform.runLater(() -> {
-                retirarDestaqueDeLinha(22);
                 destacarLinha(23);
                 atualizaVetorPorPos("aux", auxK, auxVal);
                 animacaoAuxUsoDaPosicaoDoVetor("aux", auxK);
@@ -350,7 +331,6 @@ public class MergeSortAnimation extends Application {
             Platform.runLater(() -> {
                 criaAtualizaVariavel("i", finalI[0]);
                 criaAtualizaVariavel("k", finalK[0]);
-                retirarDestaqueDeLinha(23);
             });
             Thread.sleep(DELAY);
         }
@@ -358,8 +338,6 @@ public class MergeSortAnimation extends Application {
         while (finalJ[0] <= finalFim2) { // Corrected condition
             final int currentJ = finalJ[0];
             Platform.runLater(() -> {
-                retirarDestaqueDeLinha(16); // Remove highlight from previous loop condition
-                retirarDestaqueDeLinha(22); // Remove highlight from previous loop
                 destacarLinha(24);
                 animacaoAuxUsoDaPosicaoDoVetor("vet", currentJ);
             });
@@ -369,7 +347,6 @@ public class MergeSortAnimation extends Application {
             final int auxK = finalK[0];
             final int auxVal = aux[finalK[0]];
             Platform.runLater(() -> {
-                retirarDestaqueDeLinha(24);
                 destacarLinha(25);
                 atualizaVetorPorPos("aux", auxK, auxVal);
                 animacaoAuxUsoDaPosicaoDoVetor("aux", auxK);
@@ -380,15 +357,12 @@ public class MergeSortAnimation extends Application {
             Platform.runLater(() -> {
                 criaAtualizaVariavel("j", finalJ[0]);
                 criaAtualizaVariavel("k", finalK[0]);
-                retirarDestaqueDeLinha(25);
             });
             Thread.sleep(DELAY);
         }
 
         final int finalKValue = finalK[0];
         Platform.runLater(() -> {
-            retirarDestaqueDeLinha(22);
-            retirarDestaqueDeLinha(24);
             destacarLinha(27);
             criaAtualizaVariavel("i", 0);
         });
@@ -398,7 +372,6 @@ public class MergeSortAnimation extends Application {
             final int currentX = x;
             final int currentAuxVal = aux[currentX];
             Platform.runLater(() -> {
-                retirarDestaqueDeLinha(27);
                 destacarLinha(28);
                 animacaoAuxUsoDaPosicaoDoVetor("aux", currentX);
                 atualizaVetorPorPos("vet", finalInicio1 + currentX, currentAuxVal);
@@ -407,14 +380,13 @@ public class MergeSortAnimation extends Application {
             Thread.sleep(DELAY);
             vet[finalInicio1 + x] = aux[x];
             Platform.runLater(() -> {
-                retirarDestaqueDeLinha(28);
                 destacarLinha(27);
                 criaAtualizaVariavel("i", currentX + 1);
             });
             Thread.sleep(DELAY);
         }
         Platform.runLater(() -> {
-            retirarDestaqueDeLinha(27);
+            limparTodosDestaques();
             deletarVariavel("i");
             deletarVariavel("j");
             deletarVariavel("k");
@@ -856,10 +828,22 @@ public class MergeSortAnimation extends Application {
         containerCodigoLinhas.getChildren().add(box);
     }
 
+    private void limparTodosDestaques() {
+        for (StackPane box : linhasCodigoMap.values()) {
+            if (box != null) {
+                box.setStyle("-fx-background-color: #222222;");
+            }
+        }
+    }
+
     private void destacarLinha(int numLinha) {
+        // Primeiro remove todos os destaques
+        limparTodosDestaques();
+
+        // Depois destaca apenas a linha atual
         StackPane box = linhasCodigoMap.get(numLinha);
         if (box != null) {
-            box.setStyle(box.getStyle() + " -fx-background-color: #2ECA23;");
+            box.setStyle("-fx-background-color: #2ECA23;");
 
             // Auto scroll para a linha destacada
             scrollParaLinha(box);
@@ -892,12 +876,6 @@ public class MergeSortAnimation extends Application {
         }
     }
 
-    private void retirarDestaqueDeLinha(int numLinha) {
-        StackPane box = linhasCodigoMap.get(numLinha);
-        if (box != null) {
-            box.setStyle(box.getStyle() + " -fx-background-color: #222222;");
-        }
-    }
 
     private void removerLinhaCodigo(int num) {
         StackPane box = linhasCodigoMap.get(num);

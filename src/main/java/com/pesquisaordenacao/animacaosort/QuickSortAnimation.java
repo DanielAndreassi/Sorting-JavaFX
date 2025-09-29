@@ -104,53 +104,52 @@ public class QuickSortAnimation extends Application {
             @Override
             protected Void call() throws Exception {
                 Platform.runLater(() -> {
-                    adicionarLinhaCodigo("public void QuickSortComPivo() {", 0);
-                    adicionarLinhaCodigo("    quick(0, TL - 1);", 1);
+                    adicionarLinhaCodigo("public void quickRecursao() {", 0);
+                    adicionarLinhaCodigo("    quickSP(0, TL-1);", 1);
                     adicionarLinhaCodigo("}", 2);
                     adicionarLinhaCodigo("", 3);
-                    adicionarLinhaCodigo("public void quick(int esq, int dir) {", 4);
-                    adicionarLinhaCodigo("    int i = esq, j = dir,aux;", 5);
-                    adicionarLinhaCodigo("    int pivo = vetor[(esq + dir) / 2];", 6);
-                    adicionarLinhaCodigo("    while (i <= j) {", 7);
-                    adicionarLinhaCodigo("        while (vetor[i] < pivo)", 8);
-                    adicionarLinhaCodigo("            i++;", 9);
-                    adicionarLinhaCodigo("        while (vetor[j] > pivo)", 10);
-                    adicionarLinhaCodigo("            j--;", 11);
-                    adicionarLinhaCodigo("        if (i <= j) {", 12);
-                    adicionarLinhaCodigo("            aux = vetor[i];", 13);
-                    adicionarLinhaCodigo("            vetor[i] = vetor[j];", 14);
-                    adicionarLinhaCodigo("            vetor[j] = aux;", 15);
-                    adicionarLinhaCodigo("            i++;", 16);
-                    adicionarLinhaCodigo("            j--;", 17);
-                    adicionarLinhaCodigo("        }", 18);
-                    adicionarLinhaCodigo("    }", 19);
-                    adicionarLinhaCodigo("    if (esq < j)", 20);
-                    adicionarLinhaCodigo("        quick(esq, j);", 21);
-                    adicionarLinhaCodigo("    if (i < dir)", 22);
-                    adicionarLinhaCodigo("        quick(i, dir);", 23);
-                    adicionarLinhaCodigo("}", 24);
+                    adicionarLinhaCodigo("public void quickSP(int inicio, int fim) {", 4);
+                    adicionarLinhaCodigo("    int i = inicio, j = fim, aux;", 5);
+                    adicionarLinhaCodigo("    while(i<j) {", 6);
+                    adicionarLinhaCodigo("        while(i<j && vet[i] <= vet[j])", 7);
+                    adicionarLinhaCodigo("            i++;", 8);
+                    adicionarLinhaCodigo("", 9);
+                    adicionarLinhaCodigo("        aux = vet[i];", 10);
+                    adicionarLinhaCodigo("        vet[i] = vet[j];", 11);
+                    adicionarLinhaCodigo("        vet[j] = aux;", 12);
+                    adicionarLinhaCodigo("", 13);
+                    adicionarLinhaCodigo("        while(i < j && vet[j] >= vet[i])", 14);
+                    adicionarLinhaCodigo("            j--;", 15);
+                    adicionarLinhaCodigo("", 16);
+                    adicionarLinhaCodigo("        aux = vet[i];", 17);
+                    adicionarLinhaCodigo("        vet[i] = vet[j];", 18);
+                    adicionarLinhaCodigo("        vet[j] = aux;", 19);
+                    adicionarLinhaCodigo("    }", 20);
+                    adicionarLinhaCodigo("    if(inicio < i-1)", 21);
+                    adicionarLinhaCodigo("        quickSP(inicio,i-1);", 22);
+                    adicionarLinhaCodigo("    if(j+1<fim)", 23);
+                    adicionarLinhaCodigo("        quickSP(j+1,fim);", 24);
+                    adicionarLinhaCodigo("}", 25);
 
                     destacarLinha(0);
                 });
                 Thread.sleep(DELAY);
 
                 Platform.runLater(() -> {
-                    retirarDestaqueDeLinha(0);
                     destacarLinha(1);
                 });
                 Thread.sleep(DELAY);
 
-                quick(0, tl - 1);
+                quickRecursao();
 
                 Platform.runLater(() -> {
-                    retirarDestaqueDeLinha(1);
+                    limparTodosDestaques();
                     configurarBotoesFinal();
-                    deletarVariavel("esq");
-                    deletarVariavel("dir");
+                    deletarVariavel("inicio");
+                    deletarVariavel("fim");
                     deletarVariavel("i");
                     deletarVariavel("j");
                     deletarVariavel("aux");
-                    deletarVariavel("pivo");
                 });
                 Thread.sleep(1);
                 return null;
@@ -159,157 +158,143 @@ public class QuickSortAnimation extends Application {
         new Thread(task).start();
     }
 
-    public void quick(int esq, int dir) throws InterruptedException {
-        final int finalEsq = esq;
-        final int finalDir = dir;
+    public void quickRecursao() throws InterruptedException {
+        quickSP(0, tl - 1);
+    }
+
+    public void quickSP(int inicio, int fim) throws InterruptedException {
+        final int finalInicio = inicio;
+        final int finalFim = fim;
         Platform.runLater(() -> {
             destacarLinha(4);
-            criaAtualizaVariavel("esq", finalEsq);
-            criaAtualizaVariavel("dir", finalDir);
+            criaAtualizaVariavel("inicio", finalInicio);
+            criaAtualizaVariavel("fim", finalFim);
         });
         Thread.sleep(DELAY);
 
-        int i = esq, j = dir;
+        int i = inicio, j = fim;
         final int[] finalI = {i};
         final int[] finalJ = {j};
         Platform.runLater(() -> {
-            retirarDestaqueDeLinha(4);
             destacarLinha(5);
             criaAtualizaVariavel("i", finalI[0]);
             criaAtualizaVariavel("j", finalJ[0]);
         });
         Thread.sleep(DELAY);
 
-        int pivo = vet[(esq + dir) / 2];
-        final int finalPivo = pivo;
-        final int pivoIndex = (esq + dir) / 2;
-        Platform.runLater(() -> {
-            retirarDestaqueDeLinha(5);
-            destacarLinha(6);
-            criaAtualizaVariavel("pivo", finalPivo);
-            animacaoAuxUsoDaPosicaoDoVetor("vet", pivoIndex);
-        });
-        Thread.sleep(DELAY);
-
-        while (finalI[0] <= finalJ[0]) {
+        while (finalI[0] < finalJ[0]) {
             Platform.runLater(() -> {
-                retirarDestaqueDeLinha(6);
-                destacarLinha(7);
+                destacarLinha(6);
             });
             Thread.sleep(DELAY);
 
-            while (vet[finalI[0]] < finalPivo) {
-                final int currentI = finalI[0];
+            // Primeiro while: while(i<j && vet[i] <= vet[j]) i++;
+            while (finalI[0] < finalJ[0] && vet[finalI[0]] <= vet[finalJ[0]]) {
                 Platform.runLater(() -> {
-                    retirarDestaqueDeLinha(7);
-                    destacarLinha(8);
-                    animacaoAuxUsoDaPosicaoDoVetor("vet", currentI);
+                    destacarLinha(7);
+                    animacaoAuxUsoDaPosicaoDoVetor("vet", finalI[0]);
+                    animacaoAuxUsoDaPosicaoDoVetor("vet", finalJ[0]);
                 });
                 Thread.sleep(DELAY);
                 finalI[0]++;
                 Platform.runLater(() -> {
-                    retirarDestaqueDeLinha(8);
-                    destacarLinha(9);
+                    destacarLinha(8);
                     criaAtualizaVariavel("i", finalI[0]);
                 });
                 Thread.sleep(DELAY);
-                Platform.runLater(() -> retirarDestaqueDeLinha(9));
-                Thread.sleep(DELAY);
             }
 
-            while (vet[finalJ[0]] > finalPivo) {
-                final int currentJ = finalJ[0];
-                Platform.runLater(() -> {
-                    retirarDestaqueDeLinha(7);
-                    destacarLinha(10);
-                    animacaoAuxUsoDaPosicaoDoVetor("vet", currentJ);
-                });
-                Thread.sleep(DELAY);
-                finalJ[0]--;
-                Platform.runLater(() -> {
-                    retirarDestaqueDeLinha(10);
-                    destacarLinha(11);
-                    criaAtualizaVariavel("j", finalJ[0]);
-                });
-                Thread.sleep(DELAY);
-                Platform.runLater(() -> retirarDestaqueDeLinha(11));
-                Thread.sleep(DELAY);
-            }
-
-            if (finalI[0] <= finalJ[0]) {
-                Platform.runLater(() -> {
-                    retirarDestaqueDeLinha(7);
-                    destacarLinha(12);
-                });
-                Thread.sleep(DELAY);
-
+            if (finalI[0] < finalJ[0]) {
+                // Primeira troca
                 int aux = vet[finalI[0]];
-                final int finalAux = aux;
-                final int swapI = finalI[0];
-                final int swapJ = finalJ[0];
+                final int finalAux1 = aux;
+                final int swapI1 = finalI[0];
+                final int swapJ1 = finalJ[0];
                 Platform.runLater(() -> {
-                    retirarDestaqueDeLinha(12);
-                    destacarLinha(13);
-                    criaAtualizaVariavel("aux", finalAux);
+                    destacarLinha(10);
+                    criaAtualizaVariavel("aux", finalAux1);
                 });
                 Thread.sleep(DELAY);
 
-                // Primeiro faz a animação da troca ANTES de trocar os valores
                 Platform.runLater(() -> {
-                    retirarDestaqueDeLinha(13);
-                    destacarLinha(14);
-                    animarTrocaPosVet("vet", swapI, swapJ);
+                    destacarLinha(11);
+                    animarTrocaPosVet("vet", swapI1, swapJ1);
                 });
-                // Aguarda a animação completar (duração total: 350+500+350 = 1200ms)
                 Thread.sleep(DELAY + 500);
 
-                // Agora sim troca os valores
                 vet[finalI[0]] = vet[finalJ[0]];
-                vet[finalJ[0]] = finalAux;
+                vet[finalJ[0]] = finalAux1;
                 Platform.runLater(() -> {
-                    retirarDestaqueDeLinha(14);
-                    destacarLinha(15);
-                    atualizaVetorPorPos("vet", swapI, vet[swapI]);
-                    atualizaVetorPorPos("vet", swapJ, vet[swapJ]);
+                    destacarLinha(12);
+                    atualizaVetorPorPos("vet", swapI1, vet[swapI1]);
+                    atualizaVetorPorPos("vet", swapJ1, vet[swapJ1]);
                 });
                 Thread.sleep(DELAY);
 
-                finalI[0]++;
-                Platform.runLater(() -> {
-                    retirarDestaqueDeLinha(15);
-                    destacarLinha(16);
-                    criaAtualizaVariavel("i", finalI[0]);
-                });
-                Thread.sleep(DELAY);
+                // Segundo while: while(i < j && vet[j] >= vet[i]) j--;
+                while (finalI[0] < finalJ[0] && vet[finalJ[0]] >= vet[finalI[0]]) {
+                    Platform.runLater(() -> {
+                        destacarLinha(14);
+                        animacaoAuxUsoDaPosicaoDoVetor("vet", finalI[0]);
+                        animacaoAuxUsoDaPosicaoDoVetor("vet", finalJ[0]);
+                    });
+                    Thread.sleep(DELAY);
+                    finalJ[0]--;
+                    Platform.runLater(() -> {
+                        destacarLinha(15);
+                        criaAtualizaVariavel("j", finalJ[0]);
+                    });
+                    Thread.sleep(DELAY);
+                }
 
-                finalJ[0]--;
-                Platform.runLater(() -> {
-                    retirarDestaqueDeLinha(16);
-                    destacarLinha(17);
-                    criaAtualizaVariavel("j", finalJ[0]);
-                    deletarVariavel("aux");
-                });
-                Thread.sleep(DELAY);
-                Platform.runLater(() -> retirarDestaqueDeLinha(17));
-                Thread.sleep(DELAY);
+                if (finalI[0] < finalJ[0]) {
+                    // Segunda troca
+                    aux = vet[finalI[0]];
+                    final int finalAux2 = aux;
+                    final int swapI2 = finalI[0];
+                    final int swapJ2 = finalJ[0];
+                    Platform.runLater(() -> {
+                        destacarLinha(17);
+                        criaAtualizaVariavel("aux", finalAux2);
+                    });
+                    Thread.sleep(DELAY);
+
+                    Platform.runLater(() -> {
+                        destacarLinha(18);
+                        animarTrocaPosVet("vet", swapI2, swapJ2);
+                    });
+                    Thread.sleep(DELAY + 500);
+
+                    vet[finalI[0]] = vet[finalJ[0]];
+                    vet[finalJ[0]] = finalAux2;
+                    Platform.runLater(() -> {
+                        destacarLinha(19);
+                        atualizaVetorPorPos("vet", swapI2, vet[swapI2]);
+                        atualizaVetorPorPos("vet", swapJ2, vet[swapJ2]);
+                        deletarVariavel("aux");
+                    });
+                    Thread.sleep(DELAY);
+                }
             }
         }
-        Platform.runLater(() -> retirarDestaqueDeLinha(7));
         Thread.sleep(DELAY);
 
-        if (finalEsq < finalJ[0]) {
-            Platform.runLater(() -> destacarLinha(20));
+        // Chamadas recursivas
+        if (finalInicio < finalI[0] - 1) {
+            Platform.runLater(() -> destacarLinha(21));
             Thread.sleep(DELAY);
-            quick(finalEsq, finalJ[0]);
-            Platform.runLater(() -> retirarDestaqueDeLinha(20));
+            Platform.runLater(() -> destacarLinha(22));
+            Thread.sleep(DELAY);
+            quickSP(finalInicio, finalI[0] - 1);
             Thread.sleep(DELAY);
         }
 
-        if (finalI[0] < finalDir) {
-            Platform.runLater(() -> destacarLinha(22));
+        if (finalJ[0] + 1 < finalFim) {
+            Platform.runLater(() -> destacarLinha(23));
             Thread.sleep(DELAY);
-            quick(finalI[0], finalDir);
-            Platform.runLater(() -> retirarDestaqueDeLinha(22));
+            Platform.runLater(() -> destacarLinha(24));
+            Thread.sleep(DELAY);
+            quickSP(finalJ[0] + 1, finalFim);
             Thread.sleep(DELAY);
         }
     }
@@ -317,16 +302,25 @@ public class QuickSortAnimation extends Application {
     private void animarTrocaPosVet(String vectorName, int pos1, int pos2) {
         HBox boxesContainer = vectorMap.get(vectorName);
         if (boxesContainer != null && pos1 >= 0 && pos1 < boxesContainer.getChildren().size()
-                && pos2 >= 0 && pos2 < boxesContainer.getChildren().size()) {
+                && pos2 >= 0 && pos2 < boxesContainer.getChildren().size() && pos1 != pos2) {
 
             StackPane box1 = (StackPane) boxesContainer.getChildren().get(pos1);
             StackPane box2 = (StackPane) boxesContainer.getChildren().get(pos2);
+
+            // Salvar referências antes da animação
+            final StackPane finalBox1 = box1;
+            final StackPane finalBox2 = box2;
 
             // Forçar layout antes de calcular posições
             boxesContainer.applyCss();
             boxesContainer.layout();
 
             double distanciaX = box2.getBoundsInParent().getMinX() - box1.getBoundsInParent().getMinX();
+
+            // Evitar divisão por zero e casos extremos
+            if (Math.abs(distanciaX) < 1) {
+                return;
+            }
 
             // Criar as animações com durações mais balanceadas
             TranslateTransition subirBox1 = new TranslateTransition(Duration.millis(350), box1);
@@ -352,17 +346,37 @@ public class QuickSortAnimation extends Application {
             ParallelTransition animacaoParalela = new ParallelTransition(seqBox1, seqBox2);
 
             animacaoParalela.setOnFinished(e -> {
-                // Reset das transformações
-                box1.setTranslateX(0);
-                box1.setTranslateY(0);
-                box2.setTranslateX(0);
-                box2.setTranslateY(0);
+                try {
+                    // Reset das transformações
+                    finalBox1.setTranslateX(0);
+                    finalBox1.setTranslateY(0);
+                    finalBox2.setTranslateX(0);
+                    finalBox2.setTranslateY(0);
 
-                // Trocar as posições no container
-                boxesContainer.getChildren().remove(box1);
-                boxesContainer.getChildren().remove(box2);
-                boxesContainer.getChildren().add(pos2, box1);
-                boxesContainer.getChildren().add(pos1, box2);
+                    // Garantir que os elementos ainda estão no container
+                    if (boxesContainer.getChildren().contains(finalBox1) &&
+                        boxesContainer.getChildren().contains(finalBox2)) {
+
+                        // Remover na ordem correta (maior índice primeiro)
+                        int currentPos1 = boxesContainer.getChildren().indexOf(finalBox1);
+                        int currentPos2 = boxesContainer.getChildren().indexOf(finalBox2);
+
+                        if (currentPos1 > currentPos2) {
+                            boxesContainer.getChildren().remove(currentPos1);
+                            boxesContainer.getChildren().remove(currentPos2);
+                            boxesContainer.getChildren().add(currentPos2, finalBox1);
+                            boxesContainer.getChildren().add(currentPos1, finalBox2);
+                        } else {
+                            boxesContainer.getChildren().remove(currentPos2);
+                            boxesContainer.getChildren().remove(currentPos1);
+                            boxesContainer.getChildren().add(currentPos1, finalBox2);
+                            boxesContainer.getChildren().add(currentPos2, finalBox1);
+                        }
+                    }
+                } catch (Exception ex) {
+                    System.err.println("Erro na animação de troca: " + ex.getMessage());
+                    ex.printStackTrace();
+                }
             });
 
             animacaoParalela.play();
@@ -386,7 +400,7 @@ public class QuickSortAnimation extends Application {
     }
 
     private void refazerQuick() {
-        for (int i = 0; i < 25; i++) { // Adjust line count as needed
+        for (int i = 0; i < 26; i++) { // Ajustado para 26 linhas (0-25)
             removerLinhaCodigo(i);
         }
         removerVetorDaTela("vet");
@@ -782,10 +796,22 @@ public class QuickSortAnimation extends Application {
         containerCodigoLinhas.getChildren().add(box);
     }
 
+    private void limparTodosDestaques() {
+        for (StackPane box : linhasCodigoMap.values()) {
+            if (box != null) {
+                box.setStyle("-fx-background-color: #222222;");
+            }
+        }
+    }
+
     private void destacarLinha(int numLinha) {
+        // Primeiro remove todos os destaques
+        limparTodosDestaques();
+
+        // Depois destaca apenas a linha atual
         StackPane box = linhasCodigoMap.get(numLinha);
         if (box != null) {
-            box.setStyle(box.getStyle() + " -fx-background-color: #2ECA23;");
+            box.setStyle("-fx-background-color: #2ECA23;");
 
             // Auto scroll para a linha destacada
             scrollParaLinha(box);
@@ -818,12 +844,6 @@ public class QuickSortAnimation extends Application {
         }
     }
 
-    private void retirarDestaqueDeLinha(int numLinha) {
-        StackPane box = linhasCodigoMap.get(numLinha);
-        if (box != null) {
-            box.setStyle(box.getStyle() + " -fx-background-color: #222222;");
-        }
-    }
 
     private void removerLinhaCodigo(int num) {
         StackPane box = linhasCodigoMap.get(num);
