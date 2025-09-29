@@ -29,7 +29,7 @@ public class QuickSortAnimation extends Application {
     private static final int WINDOW_WIDTH = 1200;
     private static final int WINDOW_HEIGHT = 800;
     private static final int VARS_MAX_COLS = 8;
-    private static final int DELAY = 800;
+    private static final int DELAY = 1500;
 
     // Usando Manrope como fonte principal
     Font manropeFont = Font.font("Manrope", 18);
@@ -216,18 +216,18 @@ public class QuickSortAnimation extends Application {
                 });
                 Thread.sleep(DELAY);
 
+                // Realizar a troca no array primeiro
+                vet[finalI[0]] = vet[finalJ[0]];
+                vet[finalJ[0]] = finalAux1;
+
                 Platform.runLater(() -> {
                     destacarLinha(11);
                     animarTrocaPosVet("vet", swapI1, swapJ1);
                 });
                 Thread.sleep(DELAY + 500);
 
-                vet[finalI[0]] = vet[finalJ[0]];
-                vet[finalJ[0]] = finalAux1;
                 Platform.runLater(() -> {
                     destacarLinha(12);
-                    atualizaVetorPorPos("vet", swapI1, vet[swapI1]);
-                    atualizaVetorPorPos("vet", swapJ1, vet[swapJ1]);
                 });
                 Thread.sleep(DELAY);
 
@@ -259,18 +259,18 @@ public class QuickSortAnimation extends Application {
                     });
                     Thread.sleep(DELAY);
 
+                    // Realizar a troca no array primeiro
+                    vet[finalI[0]] = vet[finalJ[0]];
+                    vet[finalJ[0]] = finalAux2;
+
                     Platform.runLater(() -> {
                         destacarLinha(18);
                         animarTrocaPosVet("vet", swapI2, swapJ2);
                     });
                     Thread.sleep(DELAY + 500);
 
-                    vet[finalI[0]] = vet[finalJ[0]];
-                    vet[finalJ[0]] = finalAux2;
                     Platform.runLater(() -> {
                         destacarLinha(19);
-                        atualizaVetorPorPos("vet", swapI2, vet[swapI2]);
-                        atualizaVetorPorPos("vet", swapJ2, vet[swapJ2]);
                         deletarVariavel("aux");
                     });
                     Thread.sleep(DELAY);
@@ -307,9 +307,11 @@ public class QuickSortAnimation extends Application {
             StackPane box1 = (StackPane) boxesContainer.getChildren().get(pos1);
             StackPane box2 = (StackPane) boxesContainer.getChildren().get(pos2);
 
-            // Salvar referências antes da animação
-            final StackPane finalBox1 = box1;
-            final StackPane finalBox2 = box2;
+            // Salvar os valores antes da animação
+            Label label1 = (Label) box1.getChildren().get(0);
+            Label label2 = (Label) box2.getChildren().get(0);
+            String valor1 = label1.getText();
+            String valor2 = label2.getText();
 
             // Forçar layout antes de calcular posições
             boxesContainer.applyCss();
@@ -323,22 +325,22 @@ public class QuickSortAnimation extends Application {
             }
 
             // Criar as animações com durações mais balanceadas
-            TranslateTransition subirBox1 = new TranslateTransition(Duration.millis(350), box1);
+            TranslateTransition subirBox1 = new TranslateTransition(Duration.millis(700), box1);
             subirBox1.setByY(-60);
 
-            TranslateTransition moverHorizontalBox1 = new TranslateTransition(Duration.millis(500), box1);
+            TranslateTransition moverHorizontalBox1 = new TranslateTransition(Duration.millis(1000), box1);
             moverHorizontalBox1.setByX(distanciaX);
 
-            TranslateTransition descerBox1 = new TranslateTransition(Duration.millis(350), box1);
+            TranslateTransition descerBox1 = new TranslateTransition(Duration.millis(700), box1);
             descerBox1.setByY(60);
 
-            TranslateTransition descerBox2 = new TranslateTransition(Duration.millis(350), box2);
+            TranslateTransition descerBox2 = new TranslateTransition(Duration.millis(700), box2);
             descerBox2.setByY(60);
 
-            TranslateTransition moverHorizontalBox2 = new TranslateTransition(Duration.millis(500), box2);
+            TranslateTransition moverHorizontalBox2 = new TranslateTransition(Duration.millis(1000), box2);
             moverHorizontalBox2.setByX(-distanciaX);
 
-            TranslateTransition subirBox2 = new TranslateTransition(Duration.millis(350), box2);
+            TranslateTransition subirBox2 = new TranslateTransition(Duration.millis(700), box2);
             subirBox2.setByY(-60);
 
             SequentialTransition seqBox1 = new SequentialTransition(subirBox1, moverHorizontalBox1, descerBox1);
@@ -348,31 +350,14 @@ public class QuickSortAnimation extends Application {
             animacaoParalela.setOnFinished(e -> {
                 try {
                     // Reset das transformações
-                    finalBox1.setTranslateX(0);
-                    finalBox1.setTranslateY(0);
-                    finalBox2.setTranslateX(0);
-                    finalBox2.setTranslateY(0);
+                    box1.setTranslateX(0);
+                    box1.setTranslateY(0);
+                    box2.setTranslateX(0);
+                    box2.setTranslateY(0);
 
-                    // Garantir que os elementos ainda estão no container
-                    if (boxesContainer.getChildren().contains(finalBox1) &&
-                        boxesContainer.getChildren().contains(finalBox2)) {
-
-                        // Remover na ordem correta (maior índice primeiro)
-                        int currentPos1 = boxesContainer.getChildren().indexOf(finalBox1);
-                        int currentPos2 = boxesContainer.getChildren().indexOf(finalBox2);
-
-                        if (currentPos1 > currentPos2) {
-                            boxesContainer.getChildren().remove(currentPos1);
-                            boxesContainer.getChildren().remove(currentPos2);
-                            boxesContainer.getChildren().add(currentPos2, finalBox1);
-                            boxesContainer.getChildren().add(currentPos1, finalBox2);
-                        } else {
-                            boxesContainer.getChildren().remove(currentPos2);
-                            boxesContainer.getChildren().remove(currentPos1);
-                            boxesContainer.getChildren().add(currentPos1, finalBox2);
-                            boxesContainer.getChildren().add(currentPos2, finalBox1);
-                        }
-                    }
+                    // Trocar apenas os valores dos labels, mantendo as posições dos elementos
+                    label1.setText(valor2);
+                    label2.setText(valor1);
                 } catch (Exception ex) {
                     System.err.println("Erro na animação de troca: " + ex.getMessage());
                     ex.printStackTrace();
@@ -507,7 +492,7 @@ public class QuickSortAnimation extends Application {
             valorLabel.setText(String.valueOf(valor));
             String originalStyle = container.getStyle();
             container.setStyle(originalStyle + " -fx-background-color: #2ECA23;");
-            FadeTransition ft = new FadeTransition(Duration.millis(400), container);
+            FadeTransition ft = new FadeTransition(Duration.millis(800), container);
             ft.setFromValue(1.0);
             ft.setToValue(0.3);
             ft.setCycleCount(2);
@@ -535,7 +520,7 @@ public class QuickSortAnimation extends Application {
             gridVariaveis.add(container, col, row);
             variaveisMap.put(nome, container);
             container.setStyle(styleBase + " -fx-background-color: #2ECA23;");
-            FadeTransition ft = new FadeTransition(Duration.millis(400), container);
+            FadeTransition ft = new FadeTransition(Duration.millis(800), container);
             ft.setFromValue(1.0);
             ft.setToValue(0.3);
             ft.setCycleCount(2);
@@ -553,7 +538,7 @@ public class QuickSortAnimation extends Application {
             valorLabel.setText(valor);
             String originalStyle = container.getStyle();
             container.setStyle(originalStyle + " -fx-background-color: #555555;");
-            FadeTransition ft = new FadeTransition(Duration.millis(400), container);
+            FadeTransition ft = new FadeTransition(Duration.millis(800), container);
             ft.setFromValue(1.0);
             ft.setToValue(0.3);
             ft.setCycleCount(2);
@@ -581,7 +566,7 @@ public class QuickSortAnimation extends Application {
             gridVariaveis.add(container, col, row);
             variaveisMap.put(nome, container);
             container.setStyle(styleBase + " -fx-background-color: #555555;");
-            FadeTransition ft = new FadeTransition(Duration.millis(400), container);
+            FadeTransition ft = new FadeTransition(Duration.millis(800), container);
             ft.setFromValue(1.0);
             ft.setToValue(0.3);
             ft.setCycleCount(2);
@@ -620,7 +605,7 @@ public class QuickSortAnimation extends Application {
                 valueLabel.setStyle("-fx-text-fill: white;");
                 box.getChildren().add(valueLabel);
                 boxesContainer.getChildren().add(box);
-                FadeTransition fadeIn = new FadeTransition(Duration.millis(90), box);
+                FadeTransition fadeIn = new FadeTransition(Duration.millis(180), box);
                 fadeIn.setFromValue(0);
                 fadeIn.setToValue(1.0);
                 sequentialAppear.getChildren().add(fadeIn);
@@ -634,7 +619,7 @@ public class QuickSortAnimation extends Application {
                     ParallelTransition parallelFade = new ParallelTransition();
                     boxesContainer.getChildren().forEach(node -> {
                         StackPane box = (StackPane) node;
-                        FadeTransition fadeToDark = new FadeTransition(Duration.millis(400), box);
+                        FadeTransition fadeToDark = new FadeTransition(Duration.millis(800), box);
                         fadeToDark.setFromValue(1.0);
                         fadeToDark.setToValue(0.7);
                         fadeToDark.setCycleCount(1);
@@ -666,7 +651,7 @@ public class QuickSortAnimation extends Application {
             valueLabel.setText(String.valueOf(newValue));
             box.setStyle(
                     "-fx-border-color: white; -fx-border-width: 1px; -fx-border-radius: 0; -fx-background-radius: 0; -fx-background-color: #2ECA23;");
-            FadeTransition ft = new FadeTransition(Duration.millis(400), box);
+            FadeTransition ft = new FadeTransition(Duration.millis(800), box);
             ft.setFromValue(1.0);
             ft.setToValue(0.3);
             ft.setCycleCount(2);
@@ -683,7 +668,7 @@ public class QuickSortAnimation extends Application {
             StackPane box = (StackPane) boxesContainer.getChildren().get(pos);
             box.setStyle(
                     "-fx-border-color: white; -fx-border-width: 1px; -fx-border-radius: 0; -fx-background-radius: 0; -fx-background-color: deepskyblue;");
-            FadeTransition ft = new FadeTransition(Duration.millis(400), box);
+            FadeTransition ft = new FadeTransition(Duration.millis(800), box);
             ft.setFromValue(1.0);
             ft.setToValue(0.3);
             ft.setCycleCount(2);

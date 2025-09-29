@@ -29,7 +29,7 @@ public class MergeSortAnimation extends Application {
     private static final int WINDOW_WIDTH = 1200;
     private static final int WINDOW_HEIGHT = 800;
     private static final int VARS_MAX_COLS = 8;
-    private static final int DELAY = 800;
+    private static final int DELAY = 1500;
 
     // Usando Manrope como fonte principal
     Font manropeFont = Font.font("Manrope", 18);
@@ -523,7 +523,7 @@ public class MergeSortAnimation extends Application {
             valorLabel.setText(String.valueOf(valor));
             String originalStyle = container.getStyle();
             container.setStyle(originalStyle + " -fx-background-color: #2ECA23;");
-            FadeTransition ft = new FadeTransition(Duration.millis(400), container);
+            FadeTransition ft = new FadeTransition(Duration.millis(800), container);
             ft.setFromValue(1.0);
             ft.setToValue(0.3);
             ft.setCycleCount(2);
@@ -551,7 +551,7 @@ public class MergeSortAnimation extends Application {
             gridVariaveis.add(container, col, row);
             variaveisMap.put(nome, container);
             container.setStyle(styleBase + " -fx-background-color: #2ECA23;");
-            FadeTransition ft = new FadeTransition(Duration.millis(400), container);
+            FadeTransition ft = new FadeTransition(Duration.millis(800), container);
             ft.setFromValue(1.0);
             ft.setToValue(0.3);
             ft.setCycleCount(2);
@@ -569,7 +569,7 @@ public class MergeSortAnimation extends Application {
             valorLabel.setText(valor);
             String originalStyle = container.getStyle();
             container.setStyle(originalStyle + " -fx-background-color: #555555;");
-            FadeTransition ft = new FadeTransition(Duration.millis(400), container);
+            FadeTransition ft = new FadeTransition(Duration.millis(800), container);
             ft.setFromValue(1.0);
             ft.setToValue(0.3);
             ft.setCycleCount(2);
@@ -597,7 +597,7 @@ public class MergeSortAnimation extends Application {
             gridVariaveis.add(container, col, row);
             variaveisMap.put(nome, container);
             container.setStyle(styleBase + " -fx-background-color: #555555;");
-            FadeTransition ft = new FadeTransition(Duration.millis(400), container);
+            FadeTransition ft = new FadeTransition(Duration.millis(800), container);
             ft.setFromValue(1.0);
             ft.setToValue(0.3);
             ft.setCycleCount(2);
@@ -635,7 +635,7 @@ public class MergeSortAnimation extends Application {
                 valueLabel.setStyle("-fx-text-fill: white;");
                 box.getChildren().add(valueLabel);
                 boxesContainer.getChildren().add(box);
-                FadeTransition fadeIn = new FadeTransition(Duration.millis(90), box);
+                FadeTransition fadeIn = new FadeTransition(Duration.millis(180), box);
                 fadeIn.setFromValue(0);
                 fadeIn.setToValue(1.0);
                 sequentialAppear.getChildren().add(fadeIn);
@@ -666,7 +666,7 @@ public class MergeSortAnimation extends Application {
                     ParallelTransition parallelFade = new ParallelTransition();
                     boxesContainer.getChildren().forEach(node -> {
                         StackPane box = (StackPane) node;
-                        FadeTransition fadeToDark = new FadeTransition(Duration.millis(400), box);
+                        FadeTransition fadeToDark = new FadeTransition(Duration.millis(800), box);
                         fadeToDark.setFromValue(1.0);
                         fadeToDark.setToValue(0.7);
                         fadeToDark.setCycleCount(1);
@@ -698,7 +698,7 @@ public class MergeSortAnimation extends Application {
             valueLabel.setText(String.valueOf(newValue));
             box.setStyle(
                     "-fx-border-color: white; -fx-border-width: 1px; -fx-border-radius: 0; -fx-background-radius: 0; -fx-background-color: #2ECA23;");
-            FadeTransition ft = new FadeTransition(Duration.millis(400), box);
+            FadeTransition ft = new FadeTransition(Duration.millis(800), box);
             ft.setFromValue(1.0);
             ft.setToValue(0.3);
             ft.setCycleCount(2);
@@ -715,7 +715,7 @@ public class MergeSortAnimation extends Application {
             StackPane box = (StackPane) boxesContainer.getChildren().get(pos);
             box.setStyle(
                     "-fx-border-color: white; -fx-border-width: 1px; -fx-border-radius: 0; -fx-background-radius: 0; -fx-background-color: deepskyblue;");
-            FadeTransition ft = new FadeTransition(Duration.millis(400), box);
+            FadeTransition ft = new FadeTransition(Duration.millis(800), box);
             ft.setFromValue(1.0);
             ft.setToValue(0.3);
             ft.setCycleCount(2);
@@ -893,22 +893,22 @@ public class MergeSortAnimation extends Application {
             StackPane box1 = (StackPane) boxesContainer.getChildren().get(pos1);
             StackPane box2 = (StackPane) boxesContainer.getChildren().get(pos2);
             double distanciaX = box2.getBoundsInParent().getMinX() - box1.getBoundsInParent().getMinX();
-            TranslateTransition subirBox1 = new TranslateTransition(Duration.millis(300), box1);
+            TranslateTransition subirBox1 = new TranslateTransition(Duration.millis(600), box1);
             subirBox1.setByY(-60);
 
-            TranslateTransition moverHorizontalBox1 = new TranslateTransition(Duration.millis(400), box1);
+            TranslateTransition moverHorizontalBox1 = new TranslateTransition(Duration.millis(800), box1);
             moverHorizontalBox1.setByX(distanciaX);
 
-            TranslateTransition descerBox1 = new TranslateTransition(Duration.millis(300), box1);
+            TranslateTransition descerBox1 = new TranslateTransition(Duration.millis(600), box1);
             descerBox1.setByY(60);
 
-            TranslateTransition descerBox2 = new TranslateTransition(Duration.millis(300), box2);
+            TranslateTransition descerBox2 = new TranslateTransition(Duration.millis(600), box2);
             descerBox2.setByY(60);
 
-            TranslateTransition moverHorizontalBox2 = new TranslateTransition(Duration.millis(400), box2);
+            TranslateTransition moverHorizontalBox2 = new TranslateTransition(Duration.millis(800), box2);
             moverHorizontalBox2.setByX(-distanciaX);
 
-            TranslateTransition subirBox2 = new TranslateTransition(Duration.millis(300), box2);
+            TranslateTransition subirBox2 = new TranslateTransition(Duration.millis(600), box2);
             subirBox2.setByY(-60);
 
             SequentialTransition seqBox1 = new SequentialTransition(subirBox1, moverHorizontalBox1, descerBox1);
